@@ -1,0 +1,36 @@
+services:
+  # This is the standalone Selenium container (Hub + Chrome in one)
+  selenium:
+    image: selenium/standalone-chrome:4.20.0
+    container_name: selenium
+    ports:
+      - "4444:4444" # Expose the hub port to our host machine
+    shm_size: '2g'  # Add shared memory to prevent Chrome crashes
+
+    # --- THIS IS THE MAGIC ---
+    # Docker will run this command inside the 'selenium' container
+    # until it returns success (exit code 0).
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:4444/wd/hub/status"]
+      interval: 5s    # Check every 5 seconds
+      timeout: 10s    # Wait 10s for the check to complete
+      retries: 10     # Try 10 times before failing
+      start_period: 5s # Give it 5s to boot before first check
+
+  # This is our Python test container
+  tests:
+    container_name: python-tests
+    build: .  # Build the image from the Dockerfile in this directory
+    volumes:
+      - ./allure-results:/app/allure-results # Map results folder
+
+    # --- THIS IS THE OTHER HALF OF THE MAGIC ---
+    # This tells 'tests' to NOT start until the 'selenium'
+    # service's 'healthcheck' has passed. No more race conditions!
+    depends_on:
+      selenium:
+        condition: service_healthy
+
+    # Now, our command is simple. It just runs pytest.
+    # It will only run AFTER the healthcheck is green.
+    command: pytest
