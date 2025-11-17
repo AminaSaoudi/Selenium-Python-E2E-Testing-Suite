@@ -7,7 +7,6 @@ services:
       - "4444:4444" # Expose the hub port to our host machine
     shm_size: '2g'  # Add shared memory to prevent Chrome crashes
 
-    # --- THIS IS THE MAGIC ---
     # Docker will run this command inside the 'selenium' container
     # until it returns success (exit code 0).
     healthcheck:
@@ -24,9 +23,8 @@ services:
     volumes:
       - ./allure-results:/app/allure-results # Map results folder
 
-    # --- THIS IS THE OTHER HALF OF THE MAGIC ---
     # This tells 'tests' to NOT start until the 'selenium'
-    # service's 'healthcheck' has passed. No more race conditions!
+    # service's 'healthcheck' has passed.
     depends_on:
       selenium:
         condition: service_healthy
