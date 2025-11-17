@@ -1,4 +1,4 @@
-# Selenium-Python-E2E-Testing-Suite
+# Selenium-Python-E2E-Testing-Suite :
 End-to-End UI test automation for a live e-commerce site – 100% open source, CI-ready, Allure reports, and Dockerized.
 
 This project was built from scratch to demonstrate a professional test automation framework using industry best practices.
