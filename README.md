@@ -1,4 +1,7 @@
 # Selenium-Python-E2E-Testing-Suite :
+
+[![E2E Test Suite](https://github.com/AminaSaoudi/Selenium-Python-E2E-Testing-Suite/actions/workflows/e2e-tests.yml/badge.svg)](https://github.com/AminaSaoudi/Selenium-Python-E2E-Testing-Suite/actions/workflows/e2e-tests.yml)
+
 End-to-End UI test automation for a live e-commerce site – 100% open source, CI-ready, Allure reports, and Dockerized.
 
 This project was built from scratch to demonstrate a professional test automation framework using industry best practices.
@@ -8,6 +11,7 @@ This project was built from scratch to demonstrate a professional test automatio
 URL: https://www.saucedemo.com/
 
 ### Key Features :
+Continuous Integration (CI): Fully automated with GitHub Actions. The suite builds, runs, and tests on every push to main
 
 Page Object Model (POM) for clean, maintainable, and reusable test code.
 
@@ -20,6 +24,19 @@ Dockerized: The entire suite is containerized with docker-compose. It runs a sta
 Data-Driven: All test data (users, passwords, errors) is stored externally in data/test_data.json.
 
 Configuration Management: Environment details (like the base_url) are stored in pytest.ini, not hardcoded.
+
+### Automated CI Pipeline (GitHub Actions)
+This repository is configured with a GitHub Actions workflow (.github/workflows/e2e-tests.yml).
+
+On every push to the main branch, the workflow will automatically:
+
+1. Check out the latest code.
+2. Build the python-tests Docker image.
+3. Start the selenium and tests services using docker compose.
+4. Wait for the Selenium container to be "healthy" (using our healthcheck).
+5. Run the entire pytest suite inside the tests container.
+6. Report a Pass (✅) or Fail (❌) based on the test results.
+7. Upload the allure-results folder as an artifact for inspection.
 
 ### How to Run Using Docker
 
