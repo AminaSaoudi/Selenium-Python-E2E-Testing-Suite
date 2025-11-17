@@ -26,7 +26,7 @@ jobs:
       # Step 2: Build and run our Docker containers
       # This is the *exact* command we've been using!
       - name: Run E2E Tests with Docker Compose
-        run: docker-compose up --build --abort-on-container-exit
+        run: docker compose up --build --abort-on-container-exit
 
       # Step 3: Upload Allure results as an artifact
       # This saves the 'allure-results' folder from the server
